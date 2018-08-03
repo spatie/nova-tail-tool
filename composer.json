@@ -5,7 +5,16 @@
         "laravel",
         "nova"
     ],
+    "homepage": "https://github.com/spatie/nova-tail-tool",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Freek Van der Herten",
+            "email": "freek@spatie.be",
+            "homepage": "https://spatie.be",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "php": ">=7.1.0",
         "orchestra/testbench": "^3.6",
