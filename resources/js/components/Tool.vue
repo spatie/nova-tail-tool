@@ -38,7 +38,7 @@
                 let response = await api.fetchLogLines(this.nextPartLineNumber);
                 this.logLines += response.text;
                 this.nextPartLineNumber = response.nextPartLineNumber;
-            }
+            },
         },
     }
 </script>
