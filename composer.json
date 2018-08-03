@@ -1,5 +1,5 @@
 {
-    "name": "Spatie/NovaTailTool",
+    "name": "spatie/nova-tail-tool",
     "description": "A Laravel Nova tool to display the application log.",
     "keywords": [
         "laravel",
