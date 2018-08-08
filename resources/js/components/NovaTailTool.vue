@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import Log from '../Log';
 import Terminal from './Terminal';
+import LogReader from '../LogReader';
 
 export default {
     data: () => ({
@@ -29,11 +29,11 @@ export default {
     },
 
     mounted() {
-        this.log = new Log({ callback: this.addLines });
+        this.logReader = new LogReader({ callback: this.addLines });
     },
 
     beforeDestroy() {
-        this.log.destroy();
+        this.logReader.destroy();
     },
 
     methods: {

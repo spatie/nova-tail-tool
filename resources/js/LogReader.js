@@ -1,4 +1,4 @@
-export default class Log {
+export default class LogReader {
     constructor({ callback }) {
         this.callback = callback;
 
