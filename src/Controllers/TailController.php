@@ -34,7 +34,7 @@ class TailController extends Controller
 
         return [
             'text' => $newLines,
-            'nextPartLineNumber' => $afterLineNumber + $this->numberOfLines($newLines),
+            'lastRetrievedLineNumber' => $afterLineNumber + $this->numberOfLines($newLines),
         ];
     }
 
