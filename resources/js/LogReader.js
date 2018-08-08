@@ -4,7 +4,7 @@ export default class LogReader {
 
         this.lastRetrievedLineNumber = null;
 
-        this.poller = window.setInterval(this.fetchNewLines.bind(this), 1000);
+        this.poller = window.setInterval(() => this.fetchNewLines(), 1000);
     }
 
     async fetchNewLines() {
