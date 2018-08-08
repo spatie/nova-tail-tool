@@ -40,9 +40,11 @@ export default {
         this.$watch('text', () => {
             if (this.isScrolledToBottom) {
                 this.$nextTick(this.scrollToBottom);
-            } else {
-                this.hasUnseenContent = true;
+
+                return;
             }
+
+            this.hasUnseenContent = true;
         });
 
         this.$refs.window.addEventListener('scroll', this.updateIsScrolledToBottom);
