@@ -4,66 +4,50 @@
             Application log
         </heading>
 
-        <card ref="terminal" class="bg-90 text-white overflow-y-auto" style="height: calc(100vh - 16rem)">
-            <!-- Keep these tags together to avoid whitespace issues -->
-            <pre class="p-4"><code
-                class="font-mono leading-normal"
-                v-html="logLines || placeholder"
-            ></code></pre>
+        <card class="relative" style="height: calc(100vh - 16rem)">
+            <terminal
+                ref="terminal"
+                class="h-full"
+                :text="lines || placeholder"
+            ></terminal>
         </card>
     </div>
 </template>
 
 <script>
+import Log from '../Log';
+import Terminal from './Terminal';
+
 export default {
     data: () => ({
-        logLines: '',
-        poller: null,
-        lastRetrievedLineNumber: null,
-        placeholder: 'Listening',
+        lines: '',
+        placeholder: 'Listening'
     }),
 
+    components: {
+        Terminal
+    },
+
     mounted() {
-        this.poller = window.setInterval(this.fetchNewLines, 1000);
+        this.log = new Log({ callback: this.addLines });
     },
 
     beforeDestroy() {
-        window.clearInterval(this.poller);
+        this.log.destroy();
     },
 
     methods: {
-        async fetchNewLines() {
-            const response = await window.axios.post(`${Nova.config.base}/tail-tool`, {
-                afterLineNumber: this.lastRetrievedLineNumber,
-            });
+        addLines(lines) {
+            this.lines += lines;
 
-            this.logLines += response.data.text;
-            this.lastRetrievedLineNumber = response.data.lastRetrievedLineNumber;
-
-            if (!this.logLines) {
-                this.placeholder = this.placeholder.length > 11
-                    ? 'Listening.'
-                    : this.placeholder + '.';
-            }
-
-            if (this.scrolledToBottom()) {
-                await this.$nextTick();
-
-                this.scrollToBottom();
+            if (!this.lines) {
+                this.updatePlaceholder();
             }
         },
 
-        scrolledToBottom() {
-            const terminal = this.$refs.terminal.$el;
-
-            return terminal.scrollTop >= (terminal.scrollHeight - terminal.offsetHeight);
-        },
-
-        scrollToBottom() {
-            const terminal = this.$refs.terminal.$el;
-
-            terminal.scrollTop = terminal.scrollHeight;
-        },
-    },
+        updatePlaceholder() {
+            this.placeholder = this.placeholder.length > 11 ? 'Listening.' : this.placeholder + '.';
+        }
+    }
 };
 </script>

@@ -15,7 +15,6 @@ class NovaTailTool extends Tool
     public function boot()
     {
         Nova::script('NovaTailTool', __DIR__.'/../dist/js/tool.js');
-        Nova::style('NovaTailTool', __DIR__.'/../dist/css/tool.css');
     }
 
     /**
