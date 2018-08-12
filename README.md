@@ -5,9 +5,9 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/spatie/nova-tail-tool.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/nova-tail-tool)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/nova-tail-tool.svg?style=flat-square)](https://packagist.org/packages/spatie/nova-tail-tool)
 
-![tail tool screenshot](https://spatie.github.io/nova-tail-tool/tail-tool.png)
-
 Have you always wanted to see your application log in your Nova app? Now you can!
+
+![tail tool screenshot](https://spatie.github.io/nova-tail-tool/tail-tool.png)
 
 ## Installation
 
