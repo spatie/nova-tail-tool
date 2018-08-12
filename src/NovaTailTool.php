@@ -2,28 +2,42 @@
 
 namespace Spatie\NovaTailTool;
 
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
 
 class NovaTailTool extends Tool
 {
-    /**
-     * Perform any tasks that need to happen when the tool is booted.
-     *
-     * @return void
-     */
+    /** @var \Closure */
+    public static $authUsing;
+
     public function boot()
     {
-        Nova::script('NovaTailTool', __DIR__.'/../dist/js/tool.js');
+        Nova::script('NovaTailTool', __DIR__ . '/../dist/js/tool.js');
+
+        $this->canSee(function () {
+            return static::check(request());
+        });
     }
 
-    /**
-     * Build the view that renders the navigation links for the tool.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function renderNavigation()
+    public function renderNavigation(): View
     {
         return view('NovaTailTool::navigation');
+    }
+
+    public static function auth(Closure $callback): NovaTailTool
+    {
+        static::$authUsing = $callback;
+
+        return new static;
+    }
+
+    public static function check(Request $request): bool
+    {
+        return (static::$authUsing ?? function () {
+                return app()->environment('local');
+            })($request);
     }
 }

@@ -3,6 +3,8 @@
 namespace Spatie\NovaTailTool\Tests;
 
 use Spatie\NovaTailTool\Controllers\TailController;
+use Spatie\NovaTailTool\NovaTailTool;
+use Symfony\Component\HttpFoundation\Response;
 
 class TailControllerTest extends TestCase
 {
@@ -14,6 +16,10 @@ class TailControllerTest extends TestCase
             ->when(TailController::class)
             ->needs('$logDirectory')
             ->give(__DIR__ . '/stubs');
+
+        NovaTailTool::auth(function() {
+            return true;
+        });
     }
 
     /** @test */
@@ -24,7 +30,7 @@ class TailControllerTest extends TestCase
             ->assertSuccessful()
             ->assertJson([
                 'text' => '',
-                'nextPartLineNumber' => 10,
+                'lastRetrievedLineNumber' => 10,
             ]);
     }
 
@@ -36,7 +42,19 @@ class TailControllerTest extends TestCase
             ->assertSuccessful()
             ->assertJson([
                 'text' => 'nine' . PHP_EOL . 'ten' . PHP_EOL,
-                'nextPartLineNumber' => 10,
+                'lastRetrievedLineNumber' => 10,
             ]);
+    }
+
+    /** @test */
+    public function it_will_return_a_forbidden_reponse_if_the_auth_function_returns_false()
+    {
+        NovaTailTool::auth(function() {
+            return false;
+        });
+
+        $this
+            ->postJson('/nova/tail-tool', ['afterLineNumber' => 8])
+            ->assertStatus(Response::HTTP_FORBIDDEN);
     }
 }
