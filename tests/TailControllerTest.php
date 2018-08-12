@@ -1,9 +1,9 @@
 <?php
 
-namespace Spatie\NovaTailTool\Tests;
+namespace Spatie\TailTool\Tests;
 
-use Spatie\NovaTailTool\Controllers\TailController;
-use Spatie\NovaTailTool\NovaTailTool;
+use Spatie\TailTool\Controllers\TailController;
+use Spatie\TailTool\TailTool;
 use Symfony\Component\HttpFoundation\Response;
 
 class TailControllerTest extends TestCase
@@ -17,7 +17,7 @@ class TailControllerTest extends TestCase
             ->needs('$logDirectory')
             ->give(__DIR__ . '/stubs');
 
-        NovaTailTool::auth(function() {
+        TailTool::auth(function() {
             return true;
         });
     }
@@ -49,7 +49,7 @@ class TailControllerTest extends TestCase
     /** @test */
     public function it_will_return_a_forbidden_reponse_if_the_auth_function_returns_false()
     {
-        NovaTailTool::auth(function() {
+        TailTool::auth(function() {
             return false;
         });
 

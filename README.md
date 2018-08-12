@@ -28,7 +28,7 @@ public function register()
 {
     Nova::tools([
         // ...
-        new \Spatie\NovaTailTool\NovaTailTool(),
+        new \Spatie\TailTool\TailTool(),
     ]);
 }
 ```
@@ -39,16 +39,16 @@ Click on the "Application log" menu item in your Nova app to see the log.
 
 ### Authentication
 
-By default the tool can only be seen in the local environment. To define a more specific access policy for the tool, you should use the `NovaTailTool::auth` method. The `auth` method accepts a callback which should return true or false, indicating whether the user should have access to the tool. Typically, you should call `NovaTailTool::auth` in the boot method a service provider:
+By default the tool can only be seen in the local environment. To define a more specific access policy for the tool, you should use the `TailTool::auth` method. The `auth` method accepts a callback which should return true or false, indicating whether the user should have access to the tool. Typically, you should call `TailTool::auth` in the boot method a service provider:
 
 ```php
 // in a service provider
 
-use Spatie\NovaTailTool\NovaTailTool;
+use Spatie\TailTool\TailTool;
 
 // ...
 
-NovaTailTool::auth(function ($request) {
+TailTool::auth(function ($request) {
     // return true / false;
 });
 ```

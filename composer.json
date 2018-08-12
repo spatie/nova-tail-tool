@@ -39,18 +39,18 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\NovaTailTool\\": "src/"
+            "Spatie\\TailTool\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\NovaTailTool\\Tests\\": "tests"
+            "Spatie\\TailTool\\Tests\\": "tests"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Spatie\\NovaTailTool\\NovaTailToolServiceProvider"
+                "Spatie\\TailTool\\TailToolServiceProvider"
             ]
         }
     },

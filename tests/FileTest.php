@@ -1,15 +1,15 @@
 <?php
 
-namespace Spatie\NovaTailTool\Tests;
+namespace Spatie\TailTool\Tests;
 
-use Spatie\NovaTailTool\File;
+use Spatie\TailTool\File;
 use Spatie\Snapshots\MatchesSnapshots;
 
 class FileTest extends TestCase
 {
     use MatchesSnapshots;
 
-    /** @var \Spatie\NovaTailTool\File */
+    /** @var \Spatie\TailTool\File */
     protected $file;
 
     public function setUp()

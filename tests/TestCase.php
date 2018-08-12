@@ -1,16 +1,16 @@
 <?php
 
-namespace Spatie\NovaTailTool\Tests;
+namespace Spatie\TailTool\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
-use Spatie\NovaTailTool\NovaTailToolServiceProvider;
+use Spatie\TailTool\TailToolServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
     protected function getPackageProviders($app)
     {
         return [
-            NovaTailToolServiceProvider::class,
+            TailToolServiceProvider::class,
         ];
     }
 }

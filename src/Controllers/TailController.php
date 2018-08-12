@@ -1,9 +1,9 @@
 <?php
 
-namespace Spatie\NovaTailTool\Controllers;
+namespace Spatie\TailTool\Controllers;
 
 use Illuminate\Http\Request;
-use Spatie\NovaTailTool\File;
+use Spatie\TailTool\File;
 use Illuminate\Support\Facades\File as IlluminateFile;
 use Symfony\Component\Finder\SplFileInfo;
 use Illuminate\Routing\Controller;

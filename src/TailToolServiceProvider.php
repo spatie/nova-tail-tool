@@ -1,18 +1,18 @@
 <?php
 
-namespace Spatie\NovaTailTool;
+namespace Spatie\TailTool;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Nova;
-use Spatie\NovaTailTool\Controllers\TailController;
-use Spatie\NovaTailTool\Middleware\Authenticate;
+use Spatie\TailTool\Controllers\TailController;
+use Spatie\TailTool\Middleware\Authenticate;
 
-class NovaTailToolServiceProvider extends ServiceProvider
+class TailToolServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'NovaTailTool');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'TailTool');
     }
 
     public function register()

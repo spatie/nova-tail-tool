@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\NovaTailTool;
+namespace Spatie\TailTool;
 
 use Symfony\Component\Process\Process;
 

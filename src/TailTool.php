@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\NovaTailTool;
+namespace Spatie\TailTool;
 
 use Closure;
 use Illuminate\Http\Request;
@@ -8,14 +8,14 @@ use Illuminate\View\View;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
 
-class NovaTailTool extends Tool
+class TailTool extends Tool
 {
     /** @var \Closure */
     public static $authUsing;
 
     public function boot()
     {
-        Nova::script('NovaTailTool', __DIR__ . '/../dist/js/tool.js');
+        Nova::script('TailTool', __DIR__ . '/../dist/js/tool.js');
 
         $this->canSee(function () {
             return static::check(request());
@@ -24,10 +24,10 @@ class NovaTailTool extends Tool
 
     public function renderNavigation(): View
     {
-        return view('NovaTailTool::navigation');
+        return view('TailTool::navigation');
     }
 
-    public static function auth(Closure $callback): NovaTailTool
+    public static function auth(Closure $callback): TailTool
     {
         static::$authUsing = $callback;
 
