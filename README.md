@@ -5,8 +5,7 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/spatie/nova-tail-tool.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/nova-tail-tool)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/nova-tail-tool.svg?style=flat-square)](https://packagist.org/packages/spatie/nova-tail-tool)
 
-Have you always wanted to see your application log in the browser? Now you can!
-
+Have you always wanted to see your application log in you Nova app? Now you can!
 
 ## Installation
 
@@ -18,7 +17,23 @@ composer require spatie/nova-tail-tool
 
 ## Usage
 
-Click on the "Application log" menu item in your Nova app to see the log
+Click on the "Application log" menu item in your Nova app to see the log.
+
+### Authentication
+
+By default the tool can only be seen in the local environment. To define a more specific access policy for the tool, you should use the `NovaTailTool::auth` method. The `auth` method accepts a callback which should return true or false, indicating whether the user should have access to the tool. Typically, you should call `NovaTailTool::auth` in the boot method a service provider:
+
+```
+// in a service provider
+
+use Spatie\NovaTailTool\NovaTailTool
+
+// ...
+
+NovaTailTool::auth(function ($request) {
+    // return true / false;
+});
+```
 
 ### Testing
 
