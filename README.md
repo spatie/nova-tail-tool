@@ -15,6 +15,22 @@ You can install the package in to a Laravel app that uses [Nova](https://nova.la
 composer require spatie/nova-tail-tool
 ```
 
+Next up, you must register the tool with Nova. This is typically done in the `register` method of the `NovaServiceProvider`.
+
+```php
+// in app/Providers/NovaServiceProvder.php
+
+// ...
+
+public function register()
+{
+    Nova::tools([
+        // ...
+        new \Spatie\NovaTailTool\NovaTailTool(),
+    ]);
+}
+```
+
 ## Usage
 
 Click on the "Application log" menu item in your Nova app to see the log.
