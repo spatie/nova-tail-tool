@@ -27,6 +27,7 @@ export default {
 
     data: () => ({
         isScrolledToBottom: true,
+        isScrollingToBottom: false,
         hasUnseenContent: false
     }),
 
@@ -56,6 +57,10 @@ export default {
 
     methods: {
         updateIsScrolledToBottom() {
+            if (this.isScrollingToBottom) {
+                return;
+            }
+
             this.isScrolledToBottom =
                 this.$refs.window.scrollTop >= this.$refs.window.scrollHeight - this.$refs.window.offsetHeight;
 
@@ -65,9 +70,15 @@ export default {
         },
 
         scrollToBottom() {
+            this.isScrollingToBottom = true;
+
             animateScrollTo(this.$refs.window.scrollHeight, {
                 speed: 250,
-                element: this.$refs.window
+                element: this.$refs.window,
+                onComplete: () => {
+                    this.isScrollingToBottom = false;
+                    this.updateIsScrolledToBottom();
+                }
             });
         }
     }
