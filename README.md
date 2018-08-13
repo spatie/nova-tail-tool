@@ -39,7 +39,7 @@ Click on the "Application log" menu item in your Nova app to see the log.
 
 ### Authentication
 
-By default the tool can only be seen in the local environment. To define a more specific access policy for the tool, you should use the `TailTool::auth` method. The `auth` method accepts a callback which should return true or false, indicating whether the user should have access to the tool. Typically, you should call `TailTool::auth` in the boot method a service provider:
+By default the tool can only be seen and used in the local environment. To define a more specific access policy for the tool, you should use the `TailTool::auth` method. The `auth` method accepts a callback which should return true or false, indicating whether the user should have access to the tool. Typically, you should call `TailTool::auth` in the boot method a service provider:
 
 ```php
 // in a service provider
