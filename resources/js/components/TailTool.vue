@@ -38,6 +38,7 @@ export default {
 
     methods: {
         addLines(lines) {
+            console.log('add lines', lines);
             this.lines += lines;
 
             if (!this.lines) {

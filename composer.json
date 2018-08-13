@@ -8,7 +8,7 @@
     "repositories": [
         {
             "type": "path",
-            "url": "../nova"
+            "url": "../laravel-nova"
         }
     ],
     "homepage": "https://github.com/spatie/nova-tail-tool",
@@ -29,7 +29,7 @@
     ],
     "require": {
         "php": ">=7.1.0",
-        "laravel/nova": "*",
+        "laravel/nova": "^1.0@dev",
         "symfony/process": "^4.1"
     },
     "require-dev": {

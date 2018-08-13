@@ -4,28 +4,30 @@ namespace Spatie\TailTool;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Nova\Nova;
 use Spatie\TailTool\Controllers\TailController;
-use Spatie\TailTool\Middleware\Authenticate;
+use Spatie\TailTool\Http\Middleware\Authorize;
 
 class TailToolServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'TailTool');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'TailTool');
+
+        $this->app->booted(function () {
+            $this->routes();
+        });
     }
 
-    public function register()
+    protected function routes()
     {
-        Route::post($this->getNovaUrl('tail-tool'), TailController::class)->middleware(Authenticate::class);
-    }
-
-    public function getNovaUrl(string $url = '/'): string
-    {
-        if (! class_exists(Nova::class)) {
-            return "/nova/{$url}";
+        if ($this->app->routesAreCached()) {
+            return;
         }
 
-        return Nova::path() . "/{$url}";
+        Route::middleware(['nova', Authorize::class])
+            ->prefix('/nova-vendor/tail-tool')
+            ->group(
+                __DIR__ . '/../routes/api.php'
+            );
     }
 }

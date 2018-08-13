@@ -1,17 +1,17 @@
 <?php
 
-namespace Spatie\TailTool\Middleware;
+namespace Spatie\TailTool\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
 use Spatie\TailTool\TailTool;
 use Symfony\Component\HttpFoundation\Response;
 
-class Authenticate
+class Authorize
 {
     public function handle(Request $request, Closure $next): Response
     {
-        return TailTool::check($request)
+        return resolve(TailTool::class)->authorize($request)
             ? $next($request)
             : abort(403);
     }

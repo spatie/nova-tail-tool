@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\TailTool\Controllers;
+namespace Spatie\TailTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\TailTool\File;
