@@ -11,7 +11,7 @@ class Authorize
 {
     public function handle(Request $request, Closure $next): Response
     {
-        return resolve(TailTool::class)->authorize($request)
+        return app(TailTool::class)->authorize($request)
             ? $next($request)
             : abort(403);
     }
