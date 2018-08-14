@@ -4,13 +4,13 @@
             Application log
         </heading>
 
-        <card class="relative" style="height: calc(100vh - 16rem)">
+        <div class="relative" style="height: calc(100vh - 16rem)">
             <terminal
                 ref="terminal"
-                class="h-full"
+                class="card h-full"
                 :text="lines || placeholder"
             ></terminal>
-        </card>
+        </div>
     </div>
 </template>
 
