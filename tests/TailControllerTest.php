@@ -22,7 +22,7 @@ class TailControllerTest extends TestCase
     public function it_will_start_from_the_ending_of_the_file_when_no_starting_line_number_is_given()
     {
         $this
-            ->postJson('nova-vendor/tail-tool/spatie')
+            ->postJson('nova-vendor/spatie/tail-tool')
             ->assertSuccessful()
             ->assertJson([
                 'text' => '',
@@ -34,7 +34,7 @@ class TailControllerTest extends TestCase
     public function it_can_start_from_a_specific_line()
     {
         $this
-            ->postJson('/nova-vendor/tail-tool/spatie', ['afterLineNumber' => 8])
+            ->postJson('nova-vendor/spatie/tail-tool', ['afterLineNumber' => 8])
             ->assertSuccessful()
             ->assertJson([
                 'text' => 'nine' . PHP_EOL . 'ten' . PHP_EOL,
