@@ -11,7 +11,7 @@
                     @click="scrollToBottom"
                 >
                     Scroll to bottom
-                    <unseen-icon v-if="hasUnseenContent" class="ml-1 w-4"></unseen-icon>
+                    <icon type="view" v-if="hasUnseenContent" class="ml-1" height="15" />
                 </button>
             </div>
         </transition>
@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import UnseenIcon from './UnseenIcon';
 import animateScrollTo from 'animated-scroll-to';
 
 export default {
@@ -30,10 +29,6 @@ export default {
         isScrollingToBottom: false,
         hasUnseenContent: false
     }),
-
-    components: {
-        UnseenIcon
-    },
 
     mounted() {
         this.updateIsScrolledToBottom();
