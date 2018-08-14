@@ -29,7 +29,7 @@
     ],
     "require": {
         "php": ">=7.1.0",
-        "laravel/nova": "^1.0@dev",
+        "laravel/nova": "*",
         "symfony/process": "^4.1"
     },
     "require-dev": {
