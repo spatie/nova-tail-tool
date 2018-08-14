@@ -25,7 +25,7 @@ class TailToolServiceProvider extends ServiceProvider
         }
 
         Route::middleware(['nova', Authorize::class])
-            ->prefix('/nova-vendor/tail-tool')
+            ->prefix('/nova-vendor/tail-tool/spatie')
             ->group(
                 __DIR__ . '/../routes/api.php'
             );

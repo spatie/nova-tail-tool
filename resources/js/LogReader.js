@@ -8,7 +8,7 @@ export default class LogReader {
     }
 
     async fetchNewLines() {
-        const response = await window.axios.post(`/nova-vendor/tail-tool`, {
+        const response = await window.axios.post(`/nova-vendor/spatie/tail-tool`, {
             afterLineNumber: this.lastRetrievedLineNumber
         });
 
