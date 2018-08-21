@@ -11,7 +11,7 @@ Have you always wanted to see your application log in your Nova app? Now you can
 
 ## Installation
 
-You can install the package in to a Laravel app that uses [Nova](https://nova.laravel.com) via composer:
+You can install the nova tool in to a Laravel app that uses [Nova](https://nova.laravel.com) via composer:
 
 ```bash
 composer require spatie/nova-tail-tool
