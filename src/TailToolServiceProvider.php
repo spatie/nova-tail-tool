@@ -4,6 +4,7 @@ namespace Spatie\TailTool;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Nova\Nova;
 use Spatie\TailTool\Controllers\TailController;
 use Spatie\TailTool\Http\Middleware\Authorize;
 
@@ -29,5 +30,10 @@ class TailToolServiceProvider extends ServiceProvider
             ->group(
                 __DIR__ . '/../routes/api.php'
             );
+    }
+
+    public function register()
+    {
+        Nova::tools([TailTool::class]);
     }
 }
