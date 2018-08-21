@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Nova;
 use Spatie\TailTool\Controllers\TailController;
 use Spatie\TailTool\Http\Middleware\Authorize;
+use Laravel\Nova\Events\ServingNova
 
 class TailToolServiceProvider extends ServiceProvider
 {
@@ -34,6 +35,8 @@ class TailToolServiceProvider extends ServiceProvider
 
     public function register()
     {
-        Nova::tools([TailTool::class]);
+        Nova::serving(function (ServingNova $event) {
+            Nova::tools([TailTool::class]);
+        });
     }
 }
