@@ -35,11 +35,7 @@ public function register()
 
 ## Usage
 
-Click on the "Application log" menu item in your Nova app to see the log.
-
-### Authentication
-
-// TO DO
+Click on the "Application log" menu item in your Nova app to see the log. Initially it will be empty. All new lines that are appended to the log will be shown.
 
 ### Testing
 
