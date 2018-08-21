@@ -7,7 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Nova;
 use Spatie\TailTool\Controllers\TailController;
 use Spatie\TailTool\Http\Middleware\Authorize;
-use Laravel\Nova\Events\ServingNova
+use Laravel\Nova\Events\ServingNova;
 
 class TailToolServiceProvider extends ServiceProvider
 {
