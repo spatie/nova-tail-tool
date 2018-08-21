@@ -36,7 +36,7 @@ class TailToolServiceProvider extends ServiceProvider
     public function register()
     {
         Nova::serving(function (ServingNova $event) {
-            Nova::tools([TailTool::class]);
+            Nova::tools([new TailTool()]);
         });
     }
 }
