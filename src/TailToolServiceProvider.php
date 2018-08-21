@@ -32,11 +32,4 @@ class TailToolServiceProvider extends ServiceProvider
                 __DIR__ . '/../routes/api.php'
             );
     }
-
-    public function register()
-    {
-        Nova::serving(function (ServingNova $event) {
-            Nova::tools([new TailTool()]);
-        });
-    }
 }
