@@ -5,12 +5,6 @@
         "laravel",
         "nova"
     ],
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../laravel-nova"
-        }
-    ],
     "homepage": "https://github.com/spatie/nova-tail-tool",
     "license": "MIT",
     "authors": [
