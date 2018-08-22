@@ -45,6 +45,6 @@ class FileTest extends TestCase
 
     public function getStub(string $name): string
     {
-        return __DIR__ . "/stubs/{$name}";
+        return __DIR__."/stubs/{$name}";
     }
 }

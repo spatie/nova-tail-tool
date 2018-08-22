@@ -3,8 +3,8 @@
 namespace Spatie\TailTool\Tests;
 
 use Illuminate\Support\Facades\Route;
-use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\TailTool\TailToolServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
 {

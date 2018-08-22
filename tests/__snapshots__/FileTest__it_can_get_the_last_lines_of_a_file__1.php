@@ -1,4 +1,6 @@
-<?php return 'four
+<?php
+
+return 'four
 five
 six
 seven
