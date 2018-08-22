@@ -16,7 +16,7 @@ class File
 
     public function numberOfLines(): int
     {
-        return (int)$this->executeCommand("awk 'END {print NR}' {$this->filePath}");
+        return (int) $this->executeCommand("awk 'END {print NR}' {$this->filePath}");
     }
 
     public function contentAfterLine(int $lineNumber)
