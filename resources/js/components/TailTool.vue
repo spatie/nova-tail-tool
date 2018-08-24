@@ -29,6 +29,7 @@ export default {
     },
 
     mounted() {
+        console.log('o oh a console statement')
         this.logReader = new LogReader({ callback: this.addLines });
     },
 
