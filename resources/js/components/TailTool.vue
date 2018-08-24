@@ -29,12 +29,11 @@ export default {
     },
 
     mounted() {
-        console.log('o oh a console statement')
         this.logReader = new LogReader({ callback: this.addLines });
     },
 
     beforeDestroy() {
-        this.logReader.destroy();
+        this.logReader.destroy()
     },
 
     methods: {
