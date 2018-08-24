@@ -2,18 +2,9 @@ version: 2
 jobs:
   build:
     docker:
-    - image: php:7.1-apache
+    - image: circleci/node
     working_directory: /var/www/html
     steps:
-    - run:
-        name: Install Yarn
-        command: |
-          apt-get install -y curl software-properties-common gnupg
-          apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 68576280 86E50310
-          echo "deb http://deb.nodesource.com/node_7.x jessie main" | tee /etc/apt/sources.list.d/nodesource.list
-          echo "deb http://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-          apt-get update -qq
-          apt-get install -y -qq nodejs yarn
     - run:
         name: Run lint
         command: yarn lint
