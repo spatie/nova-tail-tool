@@ -13,4 +13,4 @@ jobs:
         command: yarn lint
     - run:
         name: Run prettier
-        command: yarn format
+        command: yarn check-format
