@@ -6,6 +6,9 @@ jobs:
     steps:
     - checkout
     - run:
+        name: Install dependencies
+        command: yarn
+    - run:
         name: Run lint
         command: yarn lint
     - run:
