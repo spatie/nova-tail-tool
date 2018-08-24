@@ -4,6 +4,7 @@ jobs:
     docker:
     - image: circleci/node
     steps:
+    - checkout
     - run:
         name: Run lint
         command: yarn lint
