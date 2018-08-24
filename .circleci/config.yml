@@ -3,7 +3,6 @@ jobs:
   build:
     docker:
     - image: circleci/node
-    working_directory: /var/www/html
     steps:
     - run:
         name: Run lint
