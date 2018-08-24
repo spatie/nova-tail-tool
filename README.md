@@ -1,7 +1,7 @@
 # A Laravel Nova tool to display the application log
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/nova-tail-tool.svg?style=flat-square)](https://packagist.org/packages/spatie/nova-tail-tool)
-![CircleCI branch](https://img.shields.io/circleci/project/github/spatie/nova-tail-tool/master.svg)
+![CircleCI branch](https://img.shields.io/circleci/project/github/spatie/nova-tail-tool/master.svg?style=flat-square)
 [![StyleCI](https://github.styleci.io/repos/143322266/shield?branch=master)](https://github.styleci.io/repos/143322266)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/nova-tail-tool.svg?style=flat-square)](https://packagist.org/packages/spatie/nova-tail-tool)
 
