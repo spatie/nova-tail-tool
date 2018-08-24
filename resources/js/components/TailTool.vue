@@ -29,7 +29,6 @@ export default {
     },
 
     mounted() {
-        console.log('test badge');
         this.logReader = new LogReader({ callback: this.addLines });
     },
 
