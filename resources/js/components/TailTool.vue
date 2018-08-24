@@ -33,7 +33,7 @@ export default {
     },
 
     beforeDestroy() {
-        this.logReader.destroy()
+        this.logReader.destroy();
     },
 
     methods: {
