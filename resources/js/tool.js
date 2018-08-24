@@ -3,7 +3,7 @@ Nova.booting((Vue, router) => {
         {
             name: 'TailTool',
             path: '/TailTool',
-            component: require('./components/TailTool')
-        }
+            component: require('./components/TailTool'),
+        },
     ]);
 });

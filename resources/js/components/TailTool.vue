@@ -21,11 +21,11 @@ import LogReader from '../LogReader';
 export default {
     data: () => ({
         lines: '',
-        placeholder: 'Listening'
+        placeholder: 'Listening',
     }),
 
     components: {
-        Terminal
+        Terminal,
     },
 
     mounted() {
@@ -38,7 +38,6 @@ export default {
 
     methods: {
         addLines(lines) {
-            console.log('add lines', lines);
             this.lines += lines;
 
             if (!this.lines) {
@@ -48,7 +47,7 @@ export default {
 
         updatePlaceholder() {
             this.placeholder = this.placeholder.length > 11 ? 'Listening.' : this.placeholder + '.';
-        }
-    }
+        },
+    },
 };
 </script>

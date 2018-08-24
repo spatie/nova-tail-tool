@@ -27,7 +27,7 @@ export default {
     data: () => ({
         isScrolledToBottom: true,
         isScrollingToBottom: false,
-        hasUnseenContent: false
+        hasUnseenContent: false,
     }),
 
     mounted() {
@@ -57,7 +57,8 @@ export default {
             }
 
             this.isScrolledToBottom =
-                this.$refs.window.scrollTop >= this.$refs.window.scrollHeight - this.$refs.window.offsetHeight;
+                this.$refs.window.scrollTop >=
+                this.$refs.window.scrollHeight - this.$refs.window.offsetHeight;
 
             if (this.isScrolledToBottom) {
                 this.hasUnseenContent = false;
@@ -73,10 +74,10 @@ export default {
                 onComplete: () => {
                     this.isScrollingToBottom = false;
                     this.updateIsScrolledToBottom();
-                }
+                },
             });
-        }
-    }
+        },
+    },
 };
 </script>
 
