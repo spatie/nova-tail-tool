@@ -6,6 +6,7 @@ jobs:
     - image: php:7.1-apache
     working_directory: /var/www/html
     steps:
+    - run:
       name: Install Yarn
       command: |
         apt-get install -y curl software-properties-common gnupg
@@ -17,6 +18,6 @@ jobs:
     - run:
       name: Run lint
       command: yarn lint
-      - run:
-          name: Run prettier
-          command: yarn format
+    - run:
+      name: Run prettier
+      command: yarn format
