@@ -4,7 +4,9 @@ export default class LogReader {
 
         this.lastRetrievedLineNumber = null;
 
-        this.poller = window.setInterval(() => this.fetchNewLines(), 1000);
+        this.nextTimeout = null;
+
+        this.fetchNewLines()
     }
 
     async fetchNewLines() {
@@ -15,9 +17,14 @@ export default class LogReader {
         this.lastRetrievedLineNumber = response.data.lastRetrievedLineNumber;
 
         this.callback(response.data.text);
+
+        this.nextTimeout = window.setTimeout(this.fetchNewLines, 1000);
     }
 
     destroy() {
-        window.clearInterval(this.poller);
+        if ( this.nextTimeout )
+        {
+            window.clearTimeout(this.nextTimeout);
+        }
     }
 }
