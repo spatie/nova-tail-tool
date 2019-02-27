@@ -12,7 +12,7 @@ class FileTest extends TestCase
     /** @var \Spatie\TailTool\File */
     protected $file;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setup();
 

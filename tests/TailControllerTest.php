@@ -6,7 +6,7 @@ use Spatie\TailTool\Http\Controllers\TailController;
 
 class TailControllerTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
