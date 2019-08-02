@@ -1,6 +1,7 @@
 /build
 /vendor
 /node_modules
+.phpunit.result.cache
 package-lock.json
 composer.phar
 composer.lock
