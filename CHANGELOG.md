@@ -2,9 +2,13 @@
 
 All notable changes to `nova-tail-tool` will be documented in this file
 
+## 2.0.2 - 2019-08-03
+
+- make component title translatable
+
 ## 2.0.1 - 2019-08-03
 
-- make title translatable
+- make navigation title translatable
 
 ## 2.0.0
 
