@@ -1,7 +1,7 @@
 <template>
     <div>
         <heading class="mb-6">
-            Application log
+            {{ __('Application log') }}
         </heading>
 
         <div class="relative" style="height: calc(100vh - 16rem)">
