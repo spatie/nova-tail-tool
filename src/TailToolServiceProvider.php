@@ -2,7 +2,6 @@
 
 namespace Spatie\TailTool;
 
-use Laravel\Nova\Nova;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Spatie\TailTool\Http\Middleware\Authorize;
