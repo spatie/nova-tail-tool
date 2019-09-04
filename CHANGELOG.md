@@ -2,6 +2,10 @@
 
 All notable changes to `nova-tail-tool` will be documented in this file
 
+## 2.1.0 - 2019-09-04
+
+- Add Laravel 6 support
+
 ## 2.0.2 - 2019-08-03
 
 - make component title translatable
