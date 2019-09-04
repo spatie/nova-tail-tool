@@ -33,7 +33,7 @@
         "symfony/process": "^4.2"
     },
     "require-dev": {
-        "orchestra/testbench": "^3.8",
+        "orchestra/testbench": "^3.8|^4.0",
         "phpunit/phpunit": "8.0",
         "spatie/phpunit-snapshot-assertions": "^2.0"
     },
