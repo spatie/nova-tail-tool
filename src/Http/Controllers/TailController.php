@@ -2,11 +2,11 @@
 
 namespace Spatie\TailTool\Http\Controllers;
 
-use Spatie\TailTool\File;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Symfony\Component\Finder\SplFileInfo;
 use Illuminate\Support\Facades\File as IlluminateFile;
+use Spatie\TailTool\File;
+use Symfony\Component\Finder\SplFileInfo;
 
 class TailController extends Controller
 {
@@ -21,7 +21,7 @@ class TailController extends Controller
     public function __invoke(Request $request)
     {
         $validated = $request->validate([
-           'afterLineNumber' => 'nullable|numeric',
+            'afterLineNumber' => 'nullable|numeric',
         ]);
 
         $logFilePath = $this->findLatestLogFile();
