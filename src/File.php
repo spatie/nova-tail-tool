@@ -16,12 +16,12 @@ class File
 
     public function numberOfLines(): int
     {
-        return (int) $this->executeCommand("awk", "END {print NR}", $this->filePath);
+        return (int) $this->executeCommand('awk', 'END {print NR}', $this->filePath);
     }
 
     public function contentAfterLine(int $lineNumber)
     {
-        return $this->executeCommand("awk", "NR > {$lineNumber}", $this->filePath);
+        return $this->executeCommand('awk', "NR > {$lineNumber}", $this->filePath);
     }
 
     protected function executeCommand(string $command, ...$args)
