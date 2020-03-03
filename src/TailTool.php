@@ -2,9 +2,9 @@
 
 namespace Spatie\TailTool;
 
+use Illuminate\View\View;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
-use Illuminate\View\View;
 
 class TailTool extends Tool
 {

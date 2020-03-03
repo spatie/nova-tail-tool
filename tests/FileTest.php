@@ -2,8 +2,8 @@
 
 namespace Spatie\TailTool\Tests;
 
-use Spatie\TailTool\File;
 use Spatie\Snapshots\MatchesSnapshots;
+use Spatie\TailTool\File;
 
 class FileTest extends TestCase
 {
