@@ -2,6 +2,10 @@
 
 All notable changes to `nova-tail-tool` will be documented in this file
 
+## 3.0.1 - 2020-09-09
+
+- add support for Laravel 8
+
 ## 3.0.0 - 2020-03-03
 
 - Add Laravel 7.0 & Nova 3.0 support
