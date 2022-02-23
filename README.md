@@ -6,7 +6,7 @@
 
 Have you always wanted to see your application log in your Nova app? Now you can!
 
-![tail tool screenshot](https://spatie.github.io/nova-tail-tool/tail-tool.png)
+![tail tool screenshot](/docs/tail-tool.png)
 
 You can see the tool in action in [this video on YouTube](https://www.youtube.com/watch?v=I_KvN_gLl9Q).
 
