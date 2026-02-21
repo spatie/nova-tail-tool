@@ -22,10 +22,10 @@
         }
     ],
     "repositories": [
-      {
-        "type": "composer",
-        "url": "https://nova.laravel.com"
-      }
+        {
+            "type": "composer",
+            "url": "https://nova.laravel.com"
+        }
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -35,8 +35,8 @@
         "symfony/process": "^5.0|^6.0|^7.0|^8.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^5.0|^6.0",
-        "phpunit/phpunit": "^8.0|^9.0",
+        "orchestra/testbench": "^5.0|^6.0|^11.0",
+        "phpunit/phpunit": "^8.0|^9.0|^12.5.12",
         "spatie/phpunit-snapshot-assertions": "^2.0"
     },
     "autoload": {
@@ -51,7 +51,6 @@
     },
     "scripts": {
         "test": "vendor/bin/phpunit"
-
     },
     "extra": {
         "laravel": {
