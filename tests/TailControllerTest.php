@@ -16,8 +16,7 @@ class TailControllerTest extends TestCase
             ->give(__DIR__.'/stubs');
     }
 
-    /** @test */
-    public function it_will_start_from_the_ending_of_the_file_when_no_starting_line_number_is_given()
+    public function test_it_will_start_from_the_ending_of_the_file_when_no_starting_line_number_is_given()
     {
         $this
             ->postJson('nova-vendor/spatie/tail-tool')
@@ -28,8 +27,7 @@ class TailControllerTest extends TestCase
             ]);
     }
 
-    /** @test */
-    public function it_can_start_from_a_specific_line()
+    public function test_it_can_start_from_a_specific_line()
     {
         $this
             ->postJson('nova-vendor/spatie/tail-tool', ['afterLineNumber' => 8])
