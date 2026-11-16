@@ -6,6 +6,19 @@ permissions:
   contents: read
 
 jobs:
+  lint:
+    name: PHP style and Composer validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+          tools: laravel/pint:^1.0
+      - run: composer validate --strict
+      - run: pint --test
+
   test:
     runs-on: ubuntu-latest
     strategy:
@@ -29,7 +42,6 @@ jobs:
           composer update --prefer-dist --no-interaction
           composer show laravel/nova
       - run: composer test
-      - run: vendor/bin/pint --test
 
   assets:
     runs-on: ubuntu-latest
