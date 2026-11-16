@@ -12,10 +12,10 @@
                 class="p-4 text-sm leading-relaxed"
             ><code>{{ text || __('Waiting for new log entries. Existing entries are not shown.') }}</code></pre>
         </div>
-        <div v-if="!atBottom" class="absolute bottom-0 inset-x-0 flex justify-center">
+        <div v-if="!atBottom" class="tail-scroll-actions">
             <button
                 type="button"
-                class="tail-scroll-button font-semibold px-4 py-3 rounded-t-lg"
+                class="tail-scroll-button font-semibold px-4 py-3 rounded-lg"
                 @click="scrollToBottom"
             >
                 {{ __('Scroll to bottom') }}
@@ -60,6 +60,12 @@ watch(
 .tail-terminal pre {
     white-space: pre-wrap;
     overflow-wrap: anywhere;
+}
+
+.tail-scroll-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5rem;
 }
 
 .tail-scroll-button {
