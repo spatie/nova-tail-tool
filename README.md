@@ -65,7 +65,12 @@ The page is available at `/nova/application-log`, or under your configured Nova 
 composer test
 ```
 
-The test suite uses Pest 5 and the real Nova package. Configure Composer's Nova repository credentials before running `composer update`. CI requires a `COMPOSER_AUTH` repository or organization secret containing Composer HTTP Basic authentication for `nova.laravel.com`, with the Nova account email as the username and a license key entitled to download Nova 5.11.1 as the password.
+The test suite uses Pest 5 and the real Nova package. Configure Composer's Nova repository credentials before running `composer update`. CI requires two repository or organization secrets:
+
+- `NOVA_USERNAME`: the Nova account email address.
+- `NOVA_LICENSE_KEY`: a license key entitled to download Nova 5.11.1.
+
+The workflow configures Composer authentication from these secrets. No JSON secret is needed.
 
 ### Building assets
 

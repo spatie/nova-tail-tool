@@ -26,8 +26,6 @@ jobs:
       matrix:
         php: ['8.4', '8.5']
     name: PHP ${{ matrix.php }} / Laravel 13 / Nova 5
-    env:
-      COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
     steps:
       - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
@@ -36,7 +34,13 @@ jobs:
           extensions: mbstring, zip, intl, pdo_sqlite
           coverage: none
       - name: Authenticate Nova
-        run: test -n "$COMPOSER_AUTH"
+        env:
+          NOVA_USERNAME: ${{ secrets.NOVA_USERNAME }}
+          NOVA_LICENSE_KEY: ${{ secrets.NOVA_LICENSE_KEY }}
+        run: |
+          test -n "$NOVA_USERNAME"
+          test -n "$NOVA_LICENSE_KEY"
+          composer config --global http-basic.nova.laravel.com "$NOVA_USERNAME" "$NOVA_LICENSE_KEY"
       - name: Install dependencies
         run: |
           composer update --prefer-dist --no-interaction
