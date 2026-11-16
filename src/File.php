@@ -6,7 +6,9 @@ use SplFileObject;
 
 class File
 {
-    public function __construct(protected string $filePath) {}
+    public function __construct(protected string $filePath)
+    {
+    }
 
     public function numberOfLines(): int
     {
