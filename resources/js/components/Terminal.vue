@@ -1,95 +1,89 @@
 <template>
-    <div class="relative overflow-hidden">
-        <div ref="window" class="bg-90 text-white overflow-y-auto h-full">
-            <!-- Keep `pre` and `code` tags together to avoid whitespace issues -->
-            <pre class="p-4"><code class="font-mono leading-normal" v-html="text"></code></pre>
+    <div class="tail-terminal relative overflow-hidden rounded-lg">
+        <div
+            ref="viewport"
+            class="overflow-auto"
+            style="height: max(18rem, calc(100dvh - 19rem))"
+            tabindex="0"
+            :aria-label="__('Application log entries')"
+            @scroll="updateScrollPosition"
+        >
+            <pre
+                class="p-4 text-sm leading-relaxed"
+            ><code>{{ text || __('Waiting for new log entries. Existing entries are not shown.') }}</code></pre>
         </div>
-        <transition name="toast">
-            <div v-if="!isScrolledToBottom" class="absolute pin-b pin-r pin-l flex justify-center">
-                <button
-                    class="bg-primary font-semibold p-2 rounded-t text-white flex items-end"
-                    @click="scrollToBottom"
-                >
-                    Scroll to bottom
-                    <icon type="view" v-if="hasUnseenContent" class="ml-1" height="15" />
-                </button>
-            </div>
-        </transition>
+        <div v-if="!atBottom" class="tail-scroll-actions">
+            <button
+                type="button"
+                class="tail-scroll-button font-semibold px-4 py-3 rounded-lg"
+                @click="scrollToBottom"
+            >
+                {{ __('Scroll to bottom') }}
+            </button>
+        </div>
     </div>
 </template>
 
-<script>
-import animateScrollTo from 'animated-scroll-to';
+<script setup>
+import { nextTick, ref, watch } from 'vue';
 
-export default {
-    props: ['text'],
+const props = defineProps({ text: { type: String, required: true } });
+const viewport = ref(null);
+const atBottom = ref(true);
 
-    data: () => ({
-        isScrolledToBottom: true,
-        isScrollingToBottom: false,
-        hasUnseenContent: false,
-    }),
+function updateScrollPosition() {
+    const element = viewport.value;
+    atBottom.value = element.scrollHeight - element.scrollTop - element.clientHeight < 4;
+}
 
-    mounted() {
-        this.updateIsScrolledToBottom();
+function scrollToBottom() {
+    viewport.value.scrollTop = viewport.value.scrollHeight;
+    atBottom.value = true;
+}
 
-        this.$watch('text', () => {
-            if (this.isScrolledToBottom) {
-                this.$nextTick(this.scrollToBottom);
-
-                return;
-            }
-
-            this.hasUnseenContent = true;
-        });
-
-        this.$refs.window.addEventListener('scroll', this.updateIsScrolledToBottom);
-    },
-
-    beforeDestroy() {
-        this.$refs.window.removeEventListener('scroll', this.updateIsScrolledToBottom);
-    },
-
-    methods: {
-        updateIsScrolledToBottom() {
-            if (this.isScrollingToBottom) {
-                return;
-            }
-
-            this.isScrolledToBottom =
-                this.$refs.window.scrollTop >=
-                this.$refs.window.scrollHeight - this.$refs.window.offsetHeight;
-
-            if (this.isScrolledToBottom) {
-                this.hasUnseenContent = false;
-            }
-        },
-
-        scrollToBottom() {
-            this.isScrollingToBottom = true;
-
-            animateScrollTo(this.$refs.window.scrollHeight, {
-                speed: 250,
-                element: this.$refs.window,
-                onComplete: () => {
-                    this.isScrollingToBottom = false;
-                    this.updateIsScrolledToBottom();
-                },
-            });
-        },
-    },
-};
+watch(
+    () => props.text,
+    async () => {
+        const shouldScroll = atBottom.value;
+        await nextTick();
+        if (shouldScroll) scrollToBottom();
+    }
+);
 </script>
 
 <style scoped>
-.toast-enter-active,
-.toast-leave-active {
-    transition: all 0.3s;
+.tail-terminal {
+    background: rgb(var(--colors-gray-900));
+    color: rgb(var(--colors-gray-100));
 }
 
-.toast-enter,
-.toast-leave-to {
-    opacity: 0.5;
-    transform: translateY(100%);
+.tail-terminal pre {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.tail-scroll-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5rem;
+}
+
+.tail-scroll-button {
+    min-height: 44px;
+    background: rgb(var(--colors-primary-600));
+    color: white;
+}
+
+.tail-scroll-button:hover {
+    background: rgb(var(--colors-primary-700));
+}
+
+.tail-scroll-button:active {
+    background: rgb(var(--colors-primary-800));
+}
+
+.tail-scroll-button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: -4px;
 }
 </style>

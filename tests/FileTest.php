@@ -1,46 +1,15 @@
 <?php
 
-namespace Spatie\TailTool\Tests;
-
-use Spatie\Snapshots\MatchesSnapshots;
 use Spatie\TailTool\File;
 
-class FileTest extends TestCase
-{
-    use MatchesSnapshots;
+it('counts lines including the last line without a newline', function () {
+    expect((new File(__DIR__.'/stubs/log.txt'))->numberOfLines())->toBe(10);
+});
 
-    /** @var \Spatie\TailTool\File */
-    protected $file;
+it('reads the remaining lines without changing their contents', function () {
+    $file = new File(__DIR__.'/stubs/log.txt');
 
-    public function setUp(): void
-    {
-        parent::setup();
-
-        $this->file = new File($this->getStub('log.txt'));
-    }
-
-    public function test_it_can_get_the_number_of_lines_in_a_file()
-    {
-        $this->assertEquals(10, $this->file->numberOfLines());
-    }
-
-    public function test_it_can_get_the_last_lines_of_a_file()
-    {
-        $this->assertMatchesSnapshot($this->file->contentAfterLine(3));
-    }
-
-    public function test_it_can_all_lines_of_a_file()
-    {
-        $this->assertMatchesSnapshot($this->file->contentAfterLine(0));
-    }
-
-    public function test_it_will_return_an_empty_string_when_getting_content_after_the_last_line()
-    {
-        $this->assertEquals('', $this->file->contentAfterLine(1000));
-    }
-
-    public function getStub(string $name): string
-    {
-        return __DIR__."/stubs/{$name}";
-    }
-}
+    expect($file->contentAfterLine(8))->toBe("nine\nten")
+        ->and($file->contentAfterLine(1000))->toBe('')
+        ->and($file->contentAfterLine(0))->toBe(file_get_contents(__DIR__.'/stubs/log.txt'));
+});

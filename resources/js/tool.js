@@ -1,9 +1,3 @@
-Nova.booting((Vue, router) => {
-    router.addRoutes([
-        {
-            name: 'TailTool',
-            path: '/application-log',
-            component: require('./components/TailTool'),
-        },
-    ]);
-});
+import TailTool from './components/TailTool.vue';
+
+Nova.inertia('TailTool', TailTool);

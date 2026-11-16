@@ -27,17 +27,15 @@
             "url": "https://nova.laravel.com"
         }
     ],
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "require": {
-        "php": ">=7.2.0",
-        "laravel/nova": "^3.0",
-        "symfony/process": "^5.0|^6.0|^7.0|^8.0"
+        "php": "^8.4",
+        "illuminate/support": "^13.0",
+        "laravel/nova": "^5.11.1"
     },
     "require-dev": {
-        "orchestra/testbench": "^5.0|^6.0|^11.0",
-        "phpunit/phpunit": "^8.0|^9.0|^12.5.12",
-        "spatie/phpunit-snapshot-assertions": "^2.0|^5.4"
+        "laravel/pint": "^1.0",
+        "orchestra/testbench": "^11.0",
+        "pestphp/pest": "^5.0"
     },
     "autoload": {
         "psr-4": {
@@ -50,7 +48,8 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit"
+        "test": "vendor/bin/pest",
+        "format": "vendor/bin/pint"
     },
     "extra": {
         "laravel": {
@@ -60,6 +59,9 @@
         }
     },
     "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        },
         "sort-packages": true
     }
 }

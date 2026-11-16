@@ -1,54 +1,61 @@
-name: run-tests
+name: Tests
 
-on:
-  - push
-  - pull_request
+on: [push, pull_request]
+
+permissions:
+  contents: read
 
 jobs:
-  test:
-    runs-on: ${{ matrix.os }}
+  lint:
+    name: PHP style and Composer validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+          tools: laravel/pint:^1.0
+      - run: composer validate --strict
+      - run: pint --test
 
+  test:
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
-        php: [7.4, '8.3', '8.4', '8.5', '8.6']
-        laravel: ['8.*', '13.*']
-        dependency-version: [prefer-stable]
-        include:
-          - laravel: 8.*
-            testbench: 6.*
-          - laravel: 13.*
-            testbench: 11.*
-        exclude:
-          - laravel: 13.*
-            php: 7.4
-
-    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }} - ${{ matrix.os }}
-
+        php: ['8.4', '8.5']
+    name: PHP ${{ matrix.php }} / Laravel 13 / Nova 5
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.composer/cache/files
-          key: dependencies-laravel-${{ matrix.laravel }}-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
+          extensions: mbstring, zip, intl, pdo_sqlite
           coverage: none
-
+      - name: Authenticate Nova
+        env:
+          NOVA_USERNAME: ${{ secrets.NOVA_USERNAME }}
+          NOVA_LICENSE_KEY: ${{ secrets.NOVA_LICENSE_KEY }}
+        run: |
+          test -n "$NOVA_USERNAME"
+          test -n "$NOVA_LICENSE_KEY"
+          composer config --global http-basic.nova.laravel.com "$NOVA_USERNAME" "$NOVA_LICENSE_KEY"
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-          composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
-        env:
-          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+          composer update --prefer-dist --no-interaction
+          composer show laravel/nova
+      - run: composer test
 
-      - name: Execute tests
-        run: vendor/bin/phpunit
+  assets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run check-format
+      - run: npm run build
+      - run: git diff --exit-code -- dist

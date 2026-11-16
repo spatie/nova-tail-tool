@@ -2,19 +2,23 @@
 
 namespace Spatie\TailTool;
 
-use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Laravel\Nova\Menu\MenuSection;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
 
 class TailTool extends Tool
 {
-    public function boot()
+    public function boot(): void
     {
         Nova::script('TailTool', __DIR__.'/../dist/js/tool.js');
+        Nova::style('TailTool', __DIR__.'/../dist/tool.css');
     }
 
-    public function renderNavigation(): View
+    public function menu(Request $request): MenuSection
     {
-        return view('TailTool::navigation');
+        return MenuSection::make(__('Application log'))
+            ->path('/application-log')
+            ->icon('command-line');
     }
 }

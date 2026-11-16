@@ -1,3 +1,6 @@
 <?php
 
-Route::post('/', Spatie\TailTool\Http\Controllers\TailController::class);
+use Illuminate\Support\Facades\Route;
+use Spatie\TailTool\Http\Controllers\TailController;
+
+Route::post('/', TailController::class);

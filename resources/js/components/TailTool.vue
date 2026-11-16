@@ -1,53 +1,36 @@
 <template>
     <div>
-        <heading class="mb-6">
-            {{ __('Application log') }}
-        </heading>
+        <Head :title="__('Application log')" />
+        <Heading class="mb-6">{{ __('Application log') }}</Heading>
 
-        <div class="relative" style="height: calc(100vh - 16rem)">
-            <terminal
-                ref="terminal"
-                class="card h-full"
-                :text="lines || placeholder"
-            ></terminal>
-        </div>
+        <p class="mb-4 text-sm text-gray-500 dark:text-gray-400" role="status">
+            {{ error ? __('Connection lost. Retrying…') : __('Listening for new log entries…') }}
+        </p>
+
+        <Terminal :text="lines" />
     </div>
 </template>
 
-<script>
-import Terminal from './Terminal';
+<script setup>
+import { onMounted, onBeforeUnmount, ref } from 'vue';
+import Terminal from './Terminal.vue';
 import LogReader from '../LogReader';
 
-export default {
-    data: () => ({
-        lines: '',
-        placeholder: 'Listening',
-    }),
+const lines = ref('');
+const error = ref(false);
+let logReader;
 
-    components: {
-        Terminal,
-    },
-
-    mounted() {
-        this.logReader = new LogReader({ callback: this.addLines });
-    },
-
-    beforeDestroy() {
-        this.logReader.destroy();
-    },
-
-    methods: {
-        addLines(lines) {
-            this.lines += lines;
-
-            if (!this.lines) {
-                this.updatePlaceholder();
-            }
+onMounted(() => {
+    logReader = new LogReader({
+        callback: (text) => {
+            error.value = false;
+            lines.value = (lines.value + text).slice(-500000);
         },
-
-        updatePlaceholder() {
-            this.placeholder = this.placeholder.length > 11 ? 'Listening.' : this.placeholder + '.';
+        onError: () => {
+            error.value = true;
         },
-    },
-};
+    });
+});
+
+onBeforeUnmount(() => logReader?.destroy());
 </script>

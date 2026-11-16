@@ -1,7 +1,7 @@
 # A Laravel Nova tool to display the application log
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/nova-tail-tool.svg?style=flat-square)](https://packagist.org/packages/spatie/nova-tail-tool)
-[![StyleCI](https://github.styleci.io/repos/143322266/shield?branch=master)](https://github.styleci.io/repos/143322266)
+[![Tests](https://github.com/spatie/nova-tail-tool/actions/workflows/run-tests.yml/badge.svg)](https://github.com/spatie/nova-tail-tool/actions/workflows/run-tests.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/nova-tail-tool.svg?style=flat-square)](https://packagist.org/packages/spatie/nova-tail-tool)
 
 Have you always wanted to see your application log in your Nova app? Now you can!
@@ -20,10 +20,12 @@ We highly appreciate you sending us a postcard from your hometown, mentioning wh
 
 ## Installation
 
-You can install the nova tool in to a Laravel app that uses [Nova](https://nova.laravel.com) via composer:
+Version 4 requires PHP 8.4+, Laravel 13, and [Nova](https://nova.laravel.com) 5.11.1+. Older PHP, Laravel, and Nova versions are no longer supported. See [UPGRADING](UPGRADING.md) when upgrading from version 3.
+
+Install the tool in a Laravel application with Nova already installed and authenticated:
 
 ```bash
-composer require spatie/nova-tail-tool
+composer require spatie/nova-tail-tool:^4.0
 ```
 
 Next up, you must register the tool with Nova. This is typically done in the `tools` method of the `NovaServiceProvider`.
@@ -33,7 +35,7 @@ Next up, you must register the tool with Nova. This is typically done in the `to
 
 // ...
 
-public function tools()
+public function tools(): array
 {
    return [
         // ...
@@ -44,13 +46,40 @@ public function tools()
 
 ## Usage
 
-Click on the "Application log" menu item in your Nova app to see the log. Initially it will be empty. All new lines that are appended to the log will be shown.
+Click "Application log" in Nova's menu. The tool listens for entries appended after you open the page, polling once per second. It reads the most recently modified `.log` file in `storage/logs`, including daily logs. Log rotation and truncation reset the cursor. Logs sent only to stderr or a remote service cannot be displayed.
+
+Entries are displayed as plain text, including HTML. The browser keeps the latest 500,000 characters. Scrolling up stops automatic scrolling; "Scroll to bottom" resumes it. Failed requests show a connection message and retry automatically. Leaving the page stops polling.
+
+Logs can contain sensitive information. Restrict access using Nova's `canSee` callback on the registered tool. The page and polling endpoint both enforce this callback and Nova authentication and authorization:
+
+```php
+(new \Spatie\TailTool\TailTool)
+    ->canSee(fn ($request) => $request->user()->can('viewApplicationLogs')),
+```
+
+The page is available at `/nova/application-log`, or under your configured Nova path.
 
 ### Testing
 
 ``` bash
 composer test
 ```
+
+The test suite uses Pest 5 and the real Nova package. Configure Composer's Nova repository credentials before running `composer update`. CI requires two repository or organization secrets:
+
+- `NOVA_USERNAME`: the Nova account email address.
+- `NOVA_LICENSE_KEY`: a license key entitled to download Nova 5.11.1.
+
+The workflow configures Composer authentication from these secrets. No JSON secret is needed.
+
+### Building assets
+
+```bash
+npm ci
+npm run build
+```
+
+Commit the rebuilt `dist` files. Applications using the package do not need Node.js. The Vue 3 components use Nova's own Vue runtime, with Vite replacing Laravel Mix.
 
 ### Changelog
 
