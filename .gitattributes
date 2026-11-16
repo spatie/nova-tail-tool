@@ -11,3 +11,8 @@
 /tests              export-ignore
 /.editorconfig      export-ignore
 /docs               export-ignore
+/.github            export-ignore
+/resources          export-ignore
+/package.json       export-ignore
+/package-lock.json  export-ignore
+/vite.config.js     export-ignore

@@ -4,51 +4,61 @@ namespace Spatie\TailTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\File as IlluminateFile;
+use Illuminate\Support\Facades\File as Filesystem;
 use Spatie\TailTool\File;
 use Symfony\Component\Finder\SplFileInfo;
 
 class TailController extends Controller
 {
-    /** @var string */
-    protected $logDirectory;
+    protected string $logDirectory;
 
-    public function __construct(string $logDirectory = null)
+    public function __construct(?string $logDirectory = null)
     {
         $this->logDirectory = $logDirectory ?? storage_path('logs');
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): array
     {
         $validated = $request->validate([
-            'afterLineNumber' => 'nullable|numeric',
+            'afterLineNumber' => ['nullable', 'integer', 'min:0'],
+            'file' => ['nullable', 'string', 'max:64'],
         ]);
 
-        $logFilePath = $this->findLatestLogFile();
+        $latestFile = is_dir($this->logDirectory)
+            ? collect(Filesystem::allFiles($this->logDirectory))
+                ->filter(fn (SplFileInfo $file) => $file->getExtension() === 'log')
+                ->sortByDesc(fn (SplFileInfo $file) => $file->getMTime())
+                ->first()
+            : null;
 
-        $logFile = new File($logFilePath);
+        if (! $latestFile) {
+            return ['text' => '', 'lastRetrievedLineNumber' => 0, 'file' => null];
+        }
 
-        $afterLineNumber = $validated['afterLineNumber'] ?? $logFile->numberOfLines();
+        $fileId = hash('sha256', $latestFile->getPathname().':'.$latestFile->getInode());
+        $logFile = new File($latestFile->getPathname());
+        $numberOfLines = $logFile->numberOfLines();
+        $afterLineNumber = $validated['afterLineNumber'] ?? $numberOfLines;
 
-        $newLines = $logFile->contentAfterLine($afterLineNumber);
+        if (isset($validated['file']) && $validated['file'] !== $fileId) {
+            $afterLineNumber = 0;
+        }
+
+        if ($afterLineNumber > $numberOfLines) {
+            $afterLineNumber = 0;
+        }
+
+        $text = $logFile->contentAfterLine($afterLineNumber);
+        $retrievedLines = substr_count($text, "\n");
+
+        if ($text !== '' && ! str_ends_with($text, "\n")) {
+            $retrievedLines++;
+        }
 
         return [
-            'text' => $newLines,
-            'lastRetrievedLineNumber' => $afterLineNumber + $this->numberOfLines($newLines),
+            'text' => $text,
+            'lastRetrievedLineNumber' => $afterLineNumber + $retrievedLines,
+            'file' => $fileId,
         ];
-    }
-
-    protected function findLatestLogFile(): string
-    {
-        return collect(IlluminateFile::allFiles($this->logDirectory))
-            ->sortByDesc(function (SplFileInfo $file) {
-                return $file->getMTime();
-            })
-            ->first() ?? '';
-    }
-
-    protected function numberOfLines(string $newLines): int
-    {
-        return substr_count($newLines, PHP_EOL);
     }
 }

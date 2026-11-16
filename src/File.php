@@ -2,34 +2,36 @@
 
 namespace Spatie\TailTool;
 
-use Symfony\Component\Process\Process;
+use SplFileObject;
 
 class File
 {
-    /** @var string */
-    protected $filePath;
-
-    public function __construct(string $filePath)
-    {
-        $this->filePath = $filePath;
-    }
+    public function __construct(protected string $filePath) {}
 
     public function numberOfLines(): int
     {
-        return (int) $this->executeCommand('awk', 'END {print NR}', $this->filePath);
+        $file = new SplFileObject($this->filePath);
+        $lines = 0;
+
+        while (! $file->eof()) {
+            if ($file->fgets() !== '') {
+                $lines++;
+            }
+        }
+
+        return $lines;
     }
 
-    public function contentAfterLine(int $lineNumber)
+    public function contentAfterLine(int $lineNumber): string
     {
-        return $this->executeCommand('awk', "NR > {$lineNumber}", $this->filePath);
-    }
+        $file = new SplFileObject($this->filePath);
+        $file->seek($lineNumber);
+        $content = '';
 
-    protected function executeCommand(string $command, ...$args)
-    {
-        $process = new Process(array_merge([$command], $args));
+        while (! $file->eof()) {
+            $content .= $file->fgets();
+        }
 
-        $process->run();
-
-        return $process->getOutput();
+        return $content;
     }
 }

@@ -2,6 +2,16 @@
 
 All notable changes to `nova-tail-tool` will be documented in this file
 
+## 4.0.0 - Unreleased
+
+- Rebuild for Nova 5.11.1+, Laravel 13, and PHP 8.4+. Drop older versions.
+- Replace Vue 2, Vue Router registration, Blade navigation, and Mix with Vue 3, Nova Inertia pages, the menu API, and Vite. Ship rebuilt assets using Nova's Vue runtime.
+- Use Pest 5 and test against the real Nova 5 package in CI.
+- Enforce Nova authentication, Nova authorization, and the registered tool's `canSee` callback on the page and polling endpoint.
+- Render log entries as text instead of HTML, retry failed requests, and cancel polling when leaving the page.
+- Read `.log` files with PHP instead of `awk`. Handle empty directories, file rotation, and truncation. Keep the latest 500,000 characters in the browser.
+- See [UPGRADING](UPGRADING.md) for breaking changes.
+
 ## 3.0.1 - 2020-09-09
 
 - add support for Laravel 8

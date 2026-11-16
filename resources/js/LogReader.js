@@ -1,23 +1,37 @@
 export default class LogReader {
-    constructor({ callback }) {
+    constructor({ callback, onError }) {
         this.callback = callback;
-
+        this.onError = onError;
         this.lastRetrievedLineNumber = null;
-
-        this.poller = window.setInterval(() => this.fetchNewLines(), 1000);
+        this.file = null;
+        this.controller = new AbortController();
+        this.fetchNewLines();
     }
 
     async fetchNewLines() {
-        const response = await window.axios.post(`/nova-vendor/spatie/tail-tool`, {
-            afterLineNumber: this.lastRetrievedLineNumber,
-        });
+        try {
+            const { data } = await Nova.request().post(
+                '/nova-vendor/spatie/tail-tool',
+                { afterLineNumber: this.lastRetrievedLineNumber, file: this.file },
+                { signal: this.controller.signal }
+            );
 
-        this.lastRetrievedLineNumber = response.data.lastRetrievedLineNumber;
+            if (this.controller.signal.aborted) return;
 
-        this.callback(response.data.text);
+            this.lastRetrievedLineNumber = data.lastRetrievedLineNumber;
+            this.file = data.file;
+            this.callback(data.text);
+        } catch (error) {
+            if (!this.controller.signal.aborted) this.onError(error);
+        } finally {
+            if (!this.controller.signal.aborted) {
+                this.poller = window.setTimeout(() => this.fetchNewLines(), 1000);
+            }
+        }
     }
 
     destroy() {
-        window.clearInterval(this.poller);
+        this.controller.abort();
+        window.clearTimeout(this.poller);
     }
 }
