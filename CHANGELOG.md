@@ -2,7 +2,7 @@
 
 All notable changes to `nova-tail-tool` will be documented in this file
 
-## 4.0.0 - Unreleased
+## 4.0.0 - 2026-11-16
 
 - Rebuild for Nova 5.11.1+, Laravel 13, and PHP 8.4+. Drop older versions.
 - Replace Vue 2, Vue Router registration, Blade navigation, and Mix with Vue 3, Nova Inertia pages, the menu API, and Vite. Ship rebuilt assets using Nova's Vue runtime.
